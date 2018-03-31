@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+bindir="$(dirname "$0")"
+java -cp "${bindir}/../etc:${bindir}/../lib/*" jw.scrapers.ReadComicOnlineTo "$@"

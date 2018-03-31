@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <Console name="stdout" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%-5p] [%d{dd/MM/yy HH:mm a}] - %m%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.gargoylesoftware" level="fatal" additivity="false">
+            <AppenderRef ref="stdout"/>
+        </Logger>
+        <Logger name="org.apache.http" level="fatal" additivity="false">
+            <AppenderRef ref="stdout"/>
+        </Logger>
+        <Root level="trace">
+            <AppenderRef ref="stdout"/>
+        </Root>
+    </Loggers>
+</Configuration>
