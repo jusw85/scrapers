@@ -80,7 +80,9 @@ public class DownloadUtil implements AutoCloseable {
         } else {
             extension = Files.getFileExtension(url.getPath());
         }
-        String filename = filenameNoExt + "." + extension;
+        String filename = filenameNoExt;
+        if (!extension.isEmpty())
+            filename += "." + extension;
         File file = new File(outDir, filename);
         Files.createParentDirs(file);
         Files.asByteSink(file).writeFrom(pis);
@@ -88,10 +90,15 @@ public class DownloadUtil implements AutoCloseable {
         if (isImage) {
             ImageInputStream iis = ImageIO.createImageInputStream(file);
             Iterator<ImageReader> it = ImageIO.getImageReaders(iis);
+            boolean imagedDetected = false;
             if (it.hasNext()) {
+                imagedDetected = true;
                 extension = it.next().getOriginatingProvider().getFileSuffixes()[0];
                 filename = filenameNoExt + "." + extension;
-                file.renameTo(new File(outDir, filename));
+            }
+            iis.close();
+            if (imagedDetected) {
+                Files.move(file, new File(outDir, filename));
             }
         }
     }
